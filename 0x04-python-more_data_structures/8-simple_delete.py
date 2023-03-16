@@ -1,6 +1,5 @@
-(5 sloc)  122 Bytes
 #!/usr/bin/python3
-def simple_delete(my_dict, key=""):
-    if key in my_dict:
-        del my_dict[key]
-        return my_dict
+def simple_delete(a_dictionary, key=""):
+    if a_dictionary.get(key) is not None:
+        del a_dictionary[key]
+    return (a_dictionary)
