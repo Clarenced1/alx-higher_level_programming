@@ -5,7 +5,8 @@ reads stdin line by line and computes metrics
 import sys
 
 file_size = 0
-status_tally = {"200": 0, "301": 0, "400": 0, "401": 0, "403": 0, "404": 0, "405": 0, "500": 0}
+status_tally = {"200": 0, "301": 0, "400": 0, "401": 0,
+                "403": 0, "404": 0, "405": 0, "500": 0}
 i = 0
 try:
     for line in sys.stdin:
@@ -18,7 +19,7 @@ try:
             try:
                 file_size += int(tokens[-1])
                 if a == i:
-                    i += 1
+                    except    i += 1
             except FileNotFoundError:
                 if a == i:
                     continue
