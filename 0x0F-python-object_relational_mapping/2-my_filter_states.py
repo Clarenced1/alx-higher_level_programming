@@ -1,28 +1,46 @@
 #!/usr/bin/python3
 """
-This script takes in an argument and
-displays all values in the states
-where `name` matches the argument
-from the database `hbtn_0e_0_usa`.
+Script that displays all values in the states table of hbtn_0e_0_usa where
+name matches the argument
 """
 
+import sys
+
 import MySQLdb
-from sys import argv
 
-if __name__ == '__main__':
-    """
-    Access to the database and get the states
-    from the database.
-    """
+if __name__ == "__main__":
+    # Get command-line arguments
+    username = sys.argv[1]
+    password = sys.argv[2]
+    database = sys.argv[3]
+    state_name = sys.argv[4]
 
-    db = MySQLdb.connect(host="localhost", user=argv[1], port=3306,
-            passwd=argv[2], db=argv[3])
+    # Connect to MySQL server
+    db = MySQLdb.connect(
+            host="localhost",
+            port=3306,
+            user=username,
+            passwd=password,
+            db=database
+            )
 
-    cur = db.cursor()
-    cur.execute("SELECT * FROM states \
-            WHERE name LIKE BINARY '{}' \
-            ORDER BY states.id ASC".format(argv[4]))
-    rows = cur.fetchall()
+    # Create a cursor object to interact with the database
+    cursor = db.cursor()
 
-    for row in rows:
-        print(row)
+    # Create the SQL query using format to include the user input
+    query = "SELECT * \
+            FROM `states` \
+            WHERE BINARY `name` = '{}'".format(sys.argv[4])
+
+    # Execute the query to retrieve states with the matching name
+    cursor.execute(query)
+
+    # Fetch all the rows returned by the query
+    states = cursor.fetchall()
+
+    # Print the states
+    [print(state) for state in states]
+
+    # Close cursor and database connection
+    cursor.close()
+    db.close()
